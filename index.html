@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="night_day.js"></script>
+    </head>
+    <body>
+        <script>
+            var todoArray = [];
+        </script>
+        <input type="button" value="night" onclick="
+        dayNightHandler(this);
+        ">
+        <br>
+
+        <input id="todo" type="text" value="write todo" onclick="
+        if (this.value === 'write todo') {
+        this.value = '';
+        }
+        "> <!--TODO : change default vaule color-->
+
+        <input type="button" value="add" onclick="
+        var target = document.querySelector('#todo').value;
+        if (target === 'write todo' || target === '') {
+        alert('please write your todo!');
+        document.querySelector('#todo').value = ''; // = target. but don't work
+        } else {
+        newCheck();
+        document.querySelector('#todo').value = '';
+        }
+        ">
+
+        
+        <h3>TODO</h3>
+
+        <button onclick="newCheck()">oooo</button>      <!--making a button, which makes new checkbox-->
+        <div id="todoCheckContainer"></div>
+        <script>
+            function newCheck() {
+                var newCheckbox = document.createElement('INPUT');
+                newCheckbox.setAttribute('type', 'checkbox');
+                todoCheckContainer.appendChild(newCheckbox);
+                var newTodoText = document.createAttribute('INPUT');
+                newTodoText.setAttribute('type','text');
+                //TODO : make new text with document.querySelector('#todo').value
+                //TODO : when checkbox checked, this text must be lined at the middle
+
+            }
+        </script>
+        <br>           
+
+
+    </body>
+</html>
