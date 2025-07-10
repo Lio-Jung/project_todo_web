@@ -2,52 +2,94 @@
 <html>
     <head>
         <script src="night_day.js"></script>
+        <meta charset="utf-8">
+        <!-- this 'placeholder' is CSS-->
+        <style>
+            #todo::placeholder{
+                color: rgb(90,90,90);
+            }
+        </style>
     </head>
     <body>
-        <script>
-            var todoArray = [];
-        </script>
-        <input type="button" value="night" onclick="
-        dayNightHandler(this);
-        ">
+        <input type="button" value="dark mode" onclick="dayNightHandler(this);">
         <br>
+        <input id="todo" type="text" placeholder="write todo">
+        <input id="addbutton" type="button" value="Enter" onclick="addTodo()">
+        <input type="button" value="delete all todos" onclick="eraseAll()">
 
-        <input id="todo" type="text" value="write todo" onclick="
-        if (this.value === 'write todo') {
-        this.value = '';
-        }
-        "> <!--TODO : change default vaule color-->
-
-        <input type="button" value="add" onclick="
-        var target = document.querySelector('#todo').value;
-        if (target === 'write todo' || target === '') {
-        alert('please write your todo!');
-        document.querySelector('#todo').value = ''; // = target. but don't work
-        } else {
-        newCheck();
-        document.querySelector('#todo').value = '';
-        }
-        ">
-
-        
         <h3>TODO</h3>
-
-        <button onclick="newCheck()">oooo</button>      <!--making a button, which makes new checkbox-->
         <div id="todoCheckContainer"></div>
-        <script>
-            function newCheck() {
-                var newCheckbox = document.createElement('INPUT');
-                newCheckbox.setAttribute('type', 'checkbox');
-                todoCheckContainer.appendChild(newCheckbox);
-                var newTodoText = document.createAttribute('INPUT');
-                newTodoText.setAttribute('type','text');
-                //TODO : make new text with document.querySelector('#todo').value
-                //TODO : when checkbox checked, this text must be lined at the middle
 
+        <script>
+            //for cache
+            let todoArray = [];
+
+            //add with "Enter" from textfield too like button
+            const tvalue = document.getElementById('todo');
+            tvalue.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("addbutton").click();
+                }
+            });
+
+            //add todo
+            function addTodo() {
+                const target = document.querySelector('#todo'); 
+                const newTodo = target.value.trim();  //newTodo's value can change but 'const' means rightside cannot change
+                if (newTodo === 'write todo' || newTodo === '') {
+                alert('please write your todo!');
+                } else {
+                    const todoObj = { text: newTodo, completed: false };
+                    todoArray.push(todoObj);
+                    saveTodo();
+                    renderTodo(todoObj);   
+                    target.value = '';
+                }
             }
+
+            function saveTodo() {} //TODO : realizing
+
+            function renderTodo(todoObj) {
+                    const container = document.getElementById('todoCheckContainer');
+                    const todiv = document.createElement('div');
+
+                    //checkbox
+                    const newCheckbox = document.createElement('input');
+                    newCheckbox.type = 'checkbox';
+                    newCheckbox.checked = todoObj.completed;
+                    newCheckbox.addEventListener('change', function () {
+                    todoObj.completed = this.checked;
+                    textNode.style.textDecoration = this.checked ? 'line-through' : 'none';
+                    saveTodos();
+                    });
+                    
+                    //text
+                    const textNode = document.createElement('span');
+                    textNode.textContent = " " + todoObj.text + ' ';
+                    textNode.style.textDecoration = todoObj.completed ? 'line-through' : 'none';//condition ? if_true : if_false --> ternary operator
+
+                    //delete button TODO : realize this function  //TODO : understanding
+                    const newdelete = document.createElement('input');
+                    newdelete.type = 'button';
+                    newdelete.value = 'x';
+                    newdelete.addEventListener('click', function () {
+                    container.removeChild(todiv);
+                    todoArray = todoArray.filter(item => item !== todoObj);
+                    saveTodos();
+                    });               
+
+                    //packaging
+                    todiv.appendChild(newCheckbox);
+                    todiv.appendChild(textNode);
+                    todiv.appendChild(newdelete);
+                    container.appendChild(todiv);
+                }
+
+            function eraseAll() {} //TODO : realize
+
         </script>
         <br>           
-
 
     </body>
 </html>
