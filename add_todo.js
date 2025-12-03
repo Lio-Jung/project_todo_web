@@ -30,7 +30,7 @@ function renderTodo(todoObj) {
                     newCheckbox.addEventListener('change', function () {
                     todoObj.completed = this.checked;
                     textNode.style.textDecoration = this.checked ? 'line-through' : 'none';
-                    saveTodos();
+                    saveTodo();
                     });
                     
                     //text
@@ -64,6 +64,7 @@ function eraseAll() {
                 if(confirm('delete all?')){
                     container.innerHTML = "";
                     todoArray = [];
+                    saveTodo();
                     document.getElementById("todo").focus();
                 }
             }

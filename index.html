@@ -3,6 +3,7 @@
     <head>
         <script src="night_day.js"></script>
         <script src="add_todo.js"></script>
+        <script src="change_user.js"></script>
         <meta charset="utf-8">
         <style>
             #todo::placeholder{
@@ -15,7 +16,14 @@
         </style>
     </head>
     <body>        
-        <input class="right" type="button" value="Change user" onclick="changeUser()">
+        
+
+
+
+
+    
+    
+        <input id="USER" class="right" type="button" value="Change user" onclick="changeUser()">
         <input class="right" type="button" value="Dark mode" onclick="dayNightHandler(this)">
         <h3>TODO</h3>
         
@@ -46,6 +54,8 @@
                 if (event.key === "Enter") {
                     event.preventDefault();
                     document.getElementById("addbutton").click();
+                    //
+                    document.getElementById("USER").click();
                 }
             });
 
@@ -60,5 +70,6 @@
         </script>
         <br>           
 
+        <!--TODO logo at the bottom--> 
     </body>
 </html>
