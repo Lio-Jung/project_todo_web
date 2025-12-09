@@ -22,7 +22,6 @@ function saveTodo() {
 function renderTodo(todoObj) {
 //                    const container = document.getElementById('todoCheckContainer');
                     const toDiv = document.createElement('div');
-
                     //checkbox
                     const newCheckbox = document.createElement('input');
                     newCheckbox.type = 'checkbox';

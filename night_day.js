@@ -2,7 +2,7 @@ function dayNightHandler(self){
     var target = document.querySelector('body');
 
     if (self.value === 'Dark mode') {
-    target.style.backgroundColor = 'rgb(30,30,30)';
+    target.style.backgroundColor = 'rgba(37, 37, 39, 1)';
     target.style.color = 'white';
     self.value = 'Light mode';
     } else {
