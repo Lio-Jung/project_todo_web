@@ -1,7 +1,5 @@
 let openUser = false;
-let changeUserPopup = null; 
-let changeUserGrid = document.createElement('div');
-changeUserGrid.id = "changeUserGrid";
+//let changeUserPopup = null; 
 let changeUserPopupUp = document.createElement('div');
 changeUserPopupUp.style.margin = 0;
 changeUserPopupUp.style.padding = 0;
@@ -33,15 +31,13 @@ newUser.addEventListener('click', function() {
     addUser();
 })
 
-let addUserBox = document.createElement('div'); 
-addUserBox.id = "addUserBox";
-addUserBox.style.display = "relative";
-addUserBox.style.width = "300px";
-addUserBox.style.height = "150px";
-addUserBox.style.transform = "translate(0%, -270%)";
-addUserBox.style.background = "white";
-addUserBox.style.borderRadius = "12px";
-addUserBox.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
+let addUserBoxPopup = document.createElement('div'); 
+addUserBoxPopup.id = "addUserBoxPopupPopup";
+addUserBoxPopup.className = "popups";
+document.body.appendChild(addUserBoxPopup);
+//changeUserPopup.appendChild(addUserBoxPopup);
+
+
 
 let addUserName0 = document.createElement('SPAN');
 addUserName0.innerHTML = 'User Name: ';
@@ -82,43 +78,48 @@ addUserX.addEventListener('click', function() {
 
 
 
+let changeUserPopup = document.createElement('div');
+changeUserPopup.id = "changeUserGrid";
+changeUserPopup.className = "popups";
+changeUserPopup.style.position = "fixed";
+changeUserPopup.style.display = 'none';
+changeUserPopup.style.top = "45%";
+changeUserPopup.style.left = "50%";
+changeUserPopup.style.transform = "translate(-50%, -50%)";
+changeUserPopup.style.width = "300px";
+changeUserPopup.style.height = "400px";
+changeUserPopup.style.background = "white";
+changeUserPopup.style.borderRadius = "12px";
+changeUserPopup.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
+changeUserPopup.style.padding = "20px";
+document.body.appendChild(changeUserPopup);
+
+
+
 
 function changeUser() {
     openUser = !openUser;
      if (openUser) {
-        changeUserPopup = document.createElement('div');
-        changeUserPopup.id = "changeUserGrid";
-        changeUserPopup.style.position = "fixed";
-        changeUserPopup.style.top = "45%";
-        changeUserPopup.style.left = "50%";
-        changeUserPopup.style.transform = "translate(-50%, -50%)";
-        changeUserPopup.style.width = "300px";
-        changeUserPopup.style.height = "400px";
-        changeUserPopup.style.background = "white";
-        changeUserPopup.style.borderRadius = "12px";
-        changeUserPopup.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
-        changeUserPopup.style.padding = "20px";
-
-        document.body.appendChild(changeUserPopup);   
+        changeUserPopup.style.display = "block";
         changeUserPopup.appendChild(changeUserPopupUp);
         changeUserPopupUp.appendChild(userclose);
         changeUserPopupUp.appendChild(newUser);
         changeUserPopup.appendChild(changeUserPopupDown);
     } else {
         if (changeUserPopup) {
-            document.body.removeChild(changeUserPopup);
-            changeUserPopup = null;
+            changeUserPopup.style.display = "none";
+            addUserBoxPopup.style.display = "none";
         }
     }
 }
 
 function addUser() {
-    changeUserPopup.appendChild(addUserBox);
-    addUserBox.appendChild(addUserName0);
-    addUserBox.appendChild(addUserName);
+    addUserBoxPopup.style.display = 'block';
+    addUserBoxPopup.appendChild(addUserName0);
+    addUserBoxPopup.appendChild(addUserName);
     document.getElementById("addUserName").focus();
-    addUserBox.appendChild(addUserOk);
-    addUserBox.appendChild(addUserX);    
+    addUserBoxPopup.appendChild(addUserOk);
+    addUserBoxPopup.appendChild(addUserX);    
     addUserName.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -128,11 +129,11 @@ function addUser() {
 }
 
 function closeAddUser() {
-    changeUserPopup.removeChild(addUserBox);
+    addUserBoxPopup.style.display = 'none';
 }
 
 function confirmUser() {
-    changeUserPopup.removeChild(addUserBox);
+    addUserBoxPopup.style.display = 'none';
     alert("sent User Name ");
     
 }

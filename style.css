@@ -6,3 +6,24 @@
     display: grid;
     grid-template-columns: 3fr 6fr;
 }
+
+#changeUserGrid{
+    position :fixed;
+    z-index: 1;
+}
+#addUserBoxPopupPopup {
+    display: none;
+    position : fixed;
+    left: 50%;
+    top: 50%;
+    width: 300px; /*가로길이 설정은 여기서*/
+    margin-left: -12%; /*width의 반만큼 음수로*/
+    height: 140px; /*세로길이 설정은 여기서*/
+    margin-top: -260px; /*height의 반만큼 음수로*/
+    z-index: 99;
+    box-shadow: 0 4px 10px rgba(71, 60, 77, 0.3);
+    background-color: white;
+    border-radius: 12px;
+    
+}
+

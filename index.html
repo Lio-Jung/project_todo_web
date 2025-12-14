@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="night_day.js"></script>
-        <script src="add_todo.js"></script>
+        <script src="night_day.js" defer></script>
+        <script src="add_todo.js" ></script>
+        <script src="change_user.js" defer></script>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
+        <meta name="viewpart" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <div class="allCenter" style="text-align: center;">
         
         <h3 style="display: inline; margin:50px;">TODO</h3>
+        <input type="button" value="Change User" onclick="changeUser()">
         <input type="button" value="Dark mode" onclick="dayNightHandler(this)">
         </div>
 
@@ -31,6 +34,8 @@
             //09.12 4 hours -> (change_user)this will be used to other thing
 
             let username = 'Lio';
+
+            //TODO : change user -> create user일때, write todo에 마우스 못가져가게 하기
 
             //TODO : let move todos up or down
 
