@@ -88,10 +88,10 @@ changeUserPopup.style.left = "50%";
 changeUserPopup.style.transform = "translate(-50%, -50%)";
 changeUserPopup.style.width = "300px";
 changeUserPopup.style.height = "400px";
-changeUserPopup.style.background = "white";
-changeUserPopup.style.borderRadius = "12px";
-changeUserPopup.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
-changeUserPopup.style.padding = "20px";
+//changeUserPopup.style.background = "white";
+//changeUserPopup.style.borderRadius = "12px";
+//changeUserPopup.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
+//changeUserPopup.style.padding = "20px";
 document.body.appendChild(changeUserPopup);
 
 
