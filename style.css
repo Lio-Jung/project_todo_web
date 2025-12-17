@@ -2,11 +2,13 @@
     color: rgb(90,90,90);
 }
 
-
-.mygrid {
+@media (min-width: 780px) {
+    .mygrid {
     display: grid;
     grid-template-columns: 3fr 6fr;
+    }
 }
+
 
 .popups{
     background: white;

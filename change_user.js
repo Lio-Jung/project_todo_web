@@ -120,7 +120,7 @@ function addUser() {
     document.getElementById("addUserName").focus();
     addUserBoxPopup.appendChild(addUserOk);
     addUserBoxPopup.appendChild(addUserX);    
-    addUserName.addEventListener("keypress", function(event) {
+    addUserName.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
             document.getElementById("addUserOk").click();

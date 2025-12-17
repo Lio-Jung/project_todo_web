@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="night_day.js" defer></script>
-        <script src="add_todo.js" ></script>
+        <script src="night_day.js"></script>
+        <script src="add_todo.js"></script>
         <script src="change_user.js" defer></script>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
@@ -10,7 +10,6 @@
     </head>
     <body>
         <div class="allCenter" style="text-align: center;">
-        
         <h3 style="display: inline; margin:50px;">TODO</h3>
         <input type="button" value="Change User" onclick="changeUser()">
         <input type="button" value="Dark mode" onclick="dayNightHandler(this)">
@@ -23,8 +22,6 @@
         <input id="addbutton" type="button" value="Enter" onclick="addTodo()">
         <input type="button" value="Delete whole todos" onclick="eraseAll()">
         <div style="margin: 20px;"></div>
-        
-        
         <div id="todoCheckContainer"></div>
         </div>
 
@@ -39,26 +36,27 @@
 
             //TODO : let move todos up or down
 
+            //open page
             document.getElementById("todo").focus();
             let todoArray = [];
-            const container = document.getElementById('todoCheckContainer');
-
-            //add with "Enter" from textfield too like button
-            const tvalue = document.getElementById('todo');
-            tvalue.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    document.getElementById("addbutton").click();
-                }
-            });
-
+            const container = document.getElementById('todoCheckContainer');    
             //loading
             let savedtodos = localStorage.getItem(`user_${username}`) || '[]';
             //parsing
             let parsing = JSON.parse(savedtodos);
             parsing.forEach(item => {
                 todoArray.push(item);
+            //rendering
                 renderTodo(item);
+            });
+
+            //add with "Enter" from textfield too like button
+            const tvalue = document.getElementById('todo');
+            tvalue.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    document.getElementById("addbutton").click();
+                }
             });
 
         </script>
