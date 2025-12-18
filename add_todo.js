@@ -1,3 +1,5 @@
+let editMode = false;
+
 function addTodo() {
     const target = document.querySelector('#todo'); 
     const newTodo = target.value.trim();  //newTodo's value can change but 'const' means rightside cannot change
@@ -25,9 +27,9 @@ function renderTodo(todoObj) {
     checkbox.type = 'checkbox';
     checkbox.checked = todoObj.completed;
     checkbox.addEventListener('change', function () {
-    todoObj.completed = this.checked;
-    textNode.style.textDecoration = this.checked ? 'line-through' : 'none';
-    saveTodo();
+        todoObj.completed = this.checked;
+        textNode.style.textDecoration = this.checked ? 'line-through' : 'none';
+        saveTodo(); 
     });
     
     //text
@@ -35,14 +37,29 @@ function renderTodo(todoObj) {
     textNode.textContent = " " + todoObj.text + ' ';
     textNode.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
 
+    
+    
     //edit button
     const editBtn = document.createElement('input');
     editBtn.type = 'button';
     editBtn.value = 'edit';
     editBtn.addEventListener('click', function(){
-        editInline(textNode, todoObj);
-        
-    })
+        editInline(textNode, todoObj, editMode, editBtn, confirmBtn);
+        editBtn.parentNode.replaceChild(confirmBtn, this);
+        editMode = true;
+    });
+    //confirm button
+    const confirmBtn = document.createElement('input');
+    confirmBtn.type = 'button';
+    confirmBtn.value = 'confirm';
+    confirmBtn.addEventListener('click', () => {
+        todoObj.text = inputtext.value;
+        textNode.textContent = ' ' + todoObj.text + " ";
+        inputtext.parentNode.replaceChild(textNode, inputtext);
+        confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
+        saveTodo();
+        editMode = false;
+    });
 
     //delete button  
     /*understanding: 이해를 해보면
@@ -77,18 +94,29 @@ function eraseAll() {
     }
 }
 
-function editInline(textNode, todoObj) {
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.value = todoObj.text;
+function editInline(textNode, todoObj, editBtn, confirmBtn) { //TODO : 여기 객체들 다 renderTodo로 옮겨서 해보자
+    const inputtext = document.createElement('input');
+    inputtext.type = 'text';
+    inputtext.value = todoObj.text;
+
+    const save = () => {
+        if (!inputtext.parentNode) return; // DOM 제거됐을 때 안전장치
+        isSaved = true;
+        todoObj.text = inputtext.value;
+        textNode.textContent = ' ' + todoObj.text + " ";
+        inputtext.parentNode.replaceChild(textNode, inputtext);
+        confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
+        saveTodo();
+    };
 
     let isSaved = false;
 
-    input.addEventListener('blur', () => {
-        if (isSaved) return;
-        input.parentNode.replaceChild(textNode, input);
+    inputtext.addEventListener('blur', () => {
+        if (isSaved || editMode) return;
+        inputtext.parentNode.replaceChild(textNode, inputtext);
+        editBtn.value = 'edit';
     });
-    input.addEventListener('keydown', e => {
+    inputtext.addEventListener('keydown', e => {
         switch(e.key) {
             case "Enter":
                 e.preventDefault();
@@ -96,20 +124,14 @@ function editInline(textNode, todoObj) {
                 break;
             case 'Escape':
                 e.preventDefault();
-                input.blur();
+                editBtn.value = 'edit';
+                confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
+                inputtext.parentNode.replaceChild(textNode, inputtext);
                 break;
         }
     });
-    const save = () => {
-        if (!input.parentNode) return; // DOM 제거됐을 때 안전장치
-        isSaved = true;
-        todoObj.text = input.value;
-        textNode.textContent = ' ' + todoObj.text + " ";
-        input.parentNode.replaceChild(textNode, input);
-        saveTodo();
-    };
+    textNode.parentNode.replaceChild(inputtext, textNode);
+    inputtext.focus();
+    inputtext.select();
 
-    textNode.parentNode.replaceChild(input, textNode);
-    input.focus();
-    input.select();
 }
