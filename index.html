@@ -2,30 +2,35 @@
 <html>
     <head>
         <script src="night_day.js"></script>
-        <script src="add_todo.js"></script>
+        <script src="manage_todo.js"></script>
         <script src="change_user.js" defer></script>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="allCenter" style="text-align: center;">
-        <h3 style="display: inline; margin:50px;">TODO</h3>
-        <input type="button" value="Change User" onclick="changeUser()">
-        <input type="button" value="Dark mode" onclick="dayNightHandler(this)">
+        <div style="text-align: center;">
+        <h3 class="title" style="display: inline; margin:50px;">TODO</h3>
+        <input type="button" value="Dark mode" class="btn" onclick="dayNightHandler(this)">
+        <input type="button" value="Change User" class="btn" onclick="changeUser()">
+        <div id = 'askName'></div>
+        <span id='user' style="font-size: small; margin-left: 1%;">User : Lio</span>
         </div>
 
         <div class="mygrid">
         <div></div>
         <div>
         <input id="todo" type="text" placeholder="write todo">
-        <input id="addbutton" type="button" value="Enter" onclick="addTodo()">
-        <input type="button" value="Delete whole todos" onclick="eraseAll()">
+        <input id="addbutton" type="button" value="Enter" class="btn" onclick="manageTodo()">
+        <input type="button" value="Delete whole todos" class="btn" onclick="eraseAll()">
         <div style="margin: 20px;"></div>
         <div id="todoCheckContainer"></div>
         </div>
 
         <script>
+            //document.getElementById('user').textContent = 'User : {f}'; //TODO : id = 'askeName' ... ... entwickeln und make change User 
+
+
             //11.27 2hours -> came after long time -> read & understand codes
             //11.28 2.5hours -> realized save & load
             //09.12 4 hours -> (change_user)this will be used to other thing
