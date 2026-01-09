@@ -39,7 +39,7 @@ function renderTodo(todoObj) {
     /* 
     edit button -> div to text + 'confirm' btn 'cancel' btn (child 'cancel' + xchild 'delete')
     -> 'text' value changable 
-    -> 1,2,3,4
+    -> 1,2,3,4 at  the same time
     1. enter in text -> confirm change          (event fnc -> click 'confirm' btn)
     2. click 'confirm' btn -> confirm change        -> 'new text' value to 'div' value
     3. ESC -> reject change

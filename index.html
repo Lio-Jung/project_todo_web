@@ -14,7 +14,7 @@
         <input type="button" value="Dark mode" class="btn" onclick="dayNightHandler(this)">
         <input type="button" value="Change User" class="btn" onclick="changeUser()">
         <div id = 'askName'></div>
-        <span id='user' style="font-size: small; margin-left: 1%;">User : Lio</span>
+        <span id='user' style="font-size: small; margin-left: 1%;">User : sample </span>
         </div>
 
         <div class="mygrid">
@@ -43,17 +43,42 @@
 
             //open page
             document.getElementById("todo").focus();
+            let userMeta = { users : [], currentUser : '', version : '' }; //!!
             let todoArray = [];
-            const container = document.getElementById('todoCheckContainer');    
+            const container = document.getElementById('todoCheckContainer');  
+
+            //localStorage.setItem('userMeta', JSON.stringify(userMeta)); //!!
+
             //loading
-            let savedtodos = localStorage.getItem(`user_${username}`) || '[]';
+            let loadUser = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
+            let savedtodos = localStorage.getItem(`user_Lio`) || '[]'; //!!
+
+            
+            //version checking
+            let version = loadUser.version;
+            if ( version !== '1.0' ) {                                     //version change!!
+                //todo 빼서 긴로컬거기에 추가 + 이전 todo로컬삭제
+                userMeta = { users : ['sample'], currentUser : 'sample', version : '1.0' };
+                let oldtodos = localStorage.getItem(`user_Lio`) || '[]';
+                localStorage.setItem(`todo_sample`, JSON.stringify(oldtodos));
+                localStorage.setItem('userMeta', JSON.stringify(userMeta));
+            }
+
+            loadUser = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
+            let loadTodo = JSON.parse(localStorage.getItem(`todo_${userMeta.currentUser}`) || '[]'); //!!
+            // TODO 여기 뭐냐 이상하다!!!!
+
             //parsing
             let parsing = JSON.parse(savedtodos);
-            parsing.forEach(item => {
+            
+            loadTodo.forEach(item => {
                 todoArray.push(item);
             //rendering
                 renderTodo(item);
             });
+
+
+
 
             //add with "Enter" from textfield too like button
             const tvalue = document.getElementById('todo');

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<h1> test field</h1>
+</head>
+<body>
+<script>
+let userMeta = { users : [], currentUser : '' , version : ''};
+let todoArray = [];
+
+
+
+const saveUserMeta = () => {
+    alert(2);
+    //localStorage.setItem('userMeta',JSON.stringify(userMeta));
+};
+
+
+// 1. input text뜸. 이름 치면 그 value이동됨.
+let firstText = 'lio';
+// 2. user.users[value] = []; , user.currentUser = value
+user.users[firstText] = [];
+user.currentUser = firstText;
+
+// 3. todo 입력
+user.users[user.currentUser].push({ text: "arbeiten", completed: false });
+
+
+let userStr = JSON.stringify(user.users);
+alert(userStr);
+// 4. change user / make new user
+let newUser = 'mom';                     //input으로 새로 만들어질 이름들
+user.users[newUser] = [];
+user.currentUser = newUser;
+//todo입력
+user.users[user.currentUser].push({  text: "work",  completed: false});
+
+//5. change user click -> lio
+user.currentUser = 'lio';
+user.users[user.currentUser].push({  text: "game",  completed: false});
+
+userStr = JSON.stringify(user.users);
+alert(userStr);
+alert(JSON.stringify(user));
+
+//6. save
+
+
+
+//{"text":"arbeiten","completed":false},{"text":"game","completed":false}
+
+alert('end');
+
+</script>
+
+</body>
+</html>

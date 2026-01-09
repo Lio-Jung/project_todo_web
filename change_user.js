@@ -1,4 +1,4 @@
-let openUser = false;
+let openUser = false; 
 //let changeUserPopup = null; 
 let changeUserPopupUp = document.createElement('div');
 changeUserPopupUp.style.margin = 0;
@@ -93,6 +93,8 @@ changeUserPopup.style.height = "400px";
 //changeUserPopup.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)";
 //changeUserPopup.style.padding = "20px";
 document.body.appendChild(changeUserPopup);
+
+
 
 
 
