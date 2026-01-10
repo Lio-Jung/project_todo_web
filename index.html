@@ -13,72 +13,58 @@
         <h3 class="title" style="display: inline; margin:50px;">TODO</h3>
         <input type="button" value="Dark mode" class="btn" onclick="dayNightHandler(this)">
         <input type="button" value="Change User" class="btn" onclick="changeUser()">
-        <div id = 'askName'></div>
         <span id='user' style="font-size: small; margin-left: 1%;">User : sample </span>
+        </div>
+
+        <div id="inputLine">
+        <input id="todo" type="text" placeholder="write todo">
+        <input id="addbutton" type="button" value="Enter" class="btn" onclick="manageTodo()">
+        <input type="button" value="Delete whole todos" class="btn" onclick="eraseAll()">
         </div>
 
         <div class="mygrid">
         <div></div>
         <div>
-        <input id="todo" type="text" placeholder="write todo">
-        <input id="addbutton" type="button" value="Enter" class="btn" onclick="manageTodo()">
-        <input type="button" value="Delete whole todos" class="btn" onclick="eraseAll()">
         <div style="margin: 20px;"></div>
         <div id="todoCheckContainer"></div>
         </div>
+        <div></div>
+        </div>
 
         <script>
-            //document.getElementById('user').textContent = 'User : {f}'; //TODO : id = 'askeName' ... ... entwickeln und make change User 
-
-
-            //11.27 2hours -> came after long time -> read & understand codes
-            //11.28 2.5hours -> realized save & load
-            //09.12 4 hours -> (change_user)this will be used to other thing
-
             let username = 'Lio';
 
             //TODO : change user -> create user일때, write todo에 마우스 못가져가게 하기
 
-            //TODO : let move todos up or down
-
             //open page
             document.getElementById("todo").focus();
-            let userMeta = { users : [], currentUser : '', version : '' }; //!!
+            let version = '';
+            let userMeta = { users : [], currentUser : ''}; //!!
             let todoArray = [];
+            let parseTodo = [];
             const container = document.getElementById('todoCheckContainer');  
-
-            //localStorage.setItem('userMeta', JSON.stringify(userMeta)); //!!
-
-            //loading
-            let loadUser = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
-            let savedtodos = localStorage.getItem(`user_Lio`) || '[]'; //!!
-
-            
-            //version checking
-            let version = loadUser.version;
-            if ( version !== '1.0' ) {                                     //version change!!
-                //todo 빼서 긴로컬거기에 추가 + 이전 todo로컬삭제
-                userMeta = { users : ['sample'], currentUser : 'sample', version : '1.0' };
-                let oldtodos = localStorage.getItem(`user_Lio`) || '[]';
-                localStorage.setItem(`todo_sample`, JSON.stringify(oldtodos));
-                localStorage.setItem('userMeta', JSON.stringify(userMeta));
+            //version checking & update
+            version = localStorage.getItem('version');
+            console.log('version : ' + version);
+            if ( version !== '1.0' ) { 
+                version = '1.0';                                                   //version change!!
+                let samplemeta = { users : ['sample'], currentUser : 'sample'};
+                let oldTodos = localStorage.getItem(`user_Lio`) || '[]';
+                localStorage.clear();                                             //erase this later upadate
+                localStorage.setItem('version', version);
+                localStorage.setItem('userMeta', JSON.stringify(samplemeta));
+                localStorage.setItem(`todo_sample`, oldTodos);
             }
 
-            loadUser = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
-            let loadTodo = JSON.parse(localStorage.getItem(`todo_${userMeta.currentUser}`) || '[]'); //!!
-            // TODO 여기 뭐냐 이상하다!!!!
-
-            //parsing
-            let parsing = JSON.parse(savedtodos);
-            
-            loadTodo.forEach(item => {
+            //loading
+            userMeta = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
+            parseTodo = JSON.parse(localStorage.getItem(`todo_${userMeta.currentUser}`) || '[]');  //!!
+            //parsing            
+            parseTodo.forEach(item => {
                 todoArray.push(item);
             //rendering
                 renderTodo(item);
             });
-
-
-
 
             //add with "Enter" from textfield too like button
             const tvalue = document.getElementById('todo');

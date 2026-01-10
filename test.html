@@ -4,12 +4,57 @@
 <h1> test field</h1>
 </head>
 <body>
+
+    <ol>
+        <li>dd <input type="button" value = 'dd'></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+
 <script>
-let userMeta = { users : [], currentUser : '' , version : ''};
+
+//////////////////////////// list with JS
+////////////////////////////    
+let ol = document.querySelector('ol');
+let i = 1;
+ol.querySelectorAll('li').forEach(function(li) {
+    li.textContent = (i++) + ' ' + li.textContent;
+});
+
+
+
+////////////////////////////    
+////////////////////////////    
+
+
+//////////////////////////// version check & update
+////////////////////////////    
+let version = '';
+let userMeta = { users : [], currentUser : ''};
 let todoArray = [];
+let parsingTodo = [];
+
+// version check & update
+version = localStorage.getItem('version');
+console.log('version check :' + version); //
+if (version !== '1.0') {
+    version = '1.0';
+    let samplemeta = { users : ['sample'], currentUser : 'sample'};
+    localStorage.setItem('version', version);
+    localStorage.setItem('userMeta', JSON.stringify(samplemeta));
+    let testArr = localStorage.getItem('user_Lio');
+    localStorage.setItem('todo_sample', testArr);
+    console.log('erase todo_Lio');
+    console.log('erase whole local');
+}
+
+console.log('load user = getitem userMeta... ...');
+////////////////////////////
+////////////////////////////
 
 
-
+/*
 const saveUserMeta = () => {
     alert(2);
     //localStorage.setItem('userMeta',JSON.stringify(userMeta));
@@ -50,6 +95,9 @@ alert(JSON.stringify(user));
 //{"text":"arbeiten","completed":false},{"text":"game","completed":false}
 
 alert('end');
+*/
+
+
 
 </script>
 

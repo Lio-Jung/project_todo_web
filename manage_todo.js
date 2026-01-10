@@ -1,3 +1,5 @@
+let count_pri = 0;
+
 function manageTodo() {
     const target = document.querySelector('#todo'); 
     const newTodo = target.value.trim();  //newTodo's value can change but 'const' means rightside cannot change
@@ -14,12 +16,38 @@ function manageTodo() {
 }
 
 function saveTodo() {
-    localStorage.setItem(`user_${username}`,JSON.stringify(todoArray));
+    localStorage.setItem(`todo_${userMeta.currentUser}`,JSON.stringify(todoArray));
 }
 
 
 function renderTodo(todoObj) {
+    count_pri ++;
     const todoItem = document.createElement('div');
+
+    //priority
+    const priority = document.createElement('span');
+    priority.id = 'priority';
+    priority.style.whiteSpace = "pre"; 
+    priority.textContent = "  " + count_pri + "  " ;
+    if ( count_pri == 1 ){
+        priority.style.color = "gold";
+        priority.style.fontSize = '150%';
+        priority.textContent = " " + count_pri + " " ;
+        priority.style.fontWeight = "900"; 
+    } if ( count_pri == 2 ){
+        priority.style.color = "silver";
+        priority.style.fontSize = '140%';
+        priority.textContent = " " + count_pri + " " ;
+        priority.style.fontWeight = "700";
+        priority.style.marginRight = '0.4%';
+    } if ( count_pri == 3 ) {
+        priority.style.color =  "rgba(205, 127, 50, 1)";
+        priority.style.fontSize = '130%';
+        priority.textContent = " " + count_pri + " " ;
+        priority.style.fontWeight = "500";
+        priority.style.marginRight = '0.6%';
+    }
+
     //checkbox
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -35,7 +63,37 @@ function renderTodo(todoObj) {
     textNode.textContent = " " + todoObj.text + ' ';
     textNode.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
 
-    
+    //up btn
+    const index = todoArray.indexOf(todoObj);
+    const upbtn = document.createElement('input');
+    upbtn.type = 'button';
+    upbtn.className = 'todobtn';
+    upbtn.value = '▲'
+    upbtn.addEventListener('click', () => {
+        let temp = todoArray[index-1];
+        if (temp) {
+            todoArray[index-1] = todoObj;
+            todoArray[index] = temp;
+            rerender();
+            saveTodo();
+        }
+    });
+    //down btn
+    const downbtn = document.createElement('input');
+    downbtn.type = 'button';
+    downbtn.className = 'todobtn';
+    downbtn.value = '▼';
+    downbtn.addEventListener('click', () => {
+        let temp = todoArray[index+1];
+        if (temp) {
+            todoArray[index+1] = todoObj;
+            todoArray[index] = temp;
+            rerender();
+            saveTodo();
+        }
+    });
+
+
     /* 
     edit button -> div to text + 'confirm' btn 'cancel' btn (child 'cancel' + xchild 'delete')
     -> 'text' value changable 
@@ -50,8 +108,9 @@ function renderTodo(todoObj) {
     //edit button
     const editBtn = document.createElement('input');
     editBtn.type = 'button';
-    editBtn.className = 'btn';
+    editBtn.className = 'todobtn';
     editBtn.value = 'edit';
+    editBtn.style.marginLeft = '2%';
     editBtn.addEventListener('click', function(){
         editBtn.parentNode.replaceChild(confirmBtn, this);
         textNode.parentNode.replaceChild(editText, textNode);
@@ -62,7 +121,7 @@ function renderTodo(todoObj) {
     //confirm button
     const confirmBtn = document.createElement('input');
     confirmBtn.type = 'button';
-    confirmBtn.className = 'btn';
+    confirmBtn.className = 'todobtn';
     confirmBtn.value = 'confirm';
     confirmBtn.id = 'confirmBtn';
     confirmBtn.addEventListener('mousedown', () => {
@@ -106,7 +165,7 @@ function renderTodo(todoObj) {
     //edit cancel btn
     const editCancelbtn = document.createElement('input');
     editCancelbtn.type = 'button';
-    editCancelbtn.className = 'btn';
+    editCancelbtn.className = 'todobtn';
     editCancelbtn.value = 'cancel';
     editCancelbtn.id = 'editCancelbtn';
     editCancelbtn.addEventListener('click', () => {
@@ -116,7 +175,6 @@ function renderTodo(todoObj) {
         editCancelbtn.parentNode.replaceChild(deleteBtn, editCancelbtn);
     })
 
-
     //delete button  
     /*understanding: 이해를 해보면
     renderTodo(){}의 {}안에 체크박스,텍스트,삭제버튼이 묶음으로 있다.
@@ -125,19 +183,40 @@ function renderTodo(todoObj) {
     그리고 renderTodo()로 생성된 것 체크박스,텍스트,삭제버튼은 한 묶음이다. 그래서 삭제버튼에서 container.removeChild(todoItem);를 했을 때, 3개가 다 사라진다.*/
     const deleteBtn = document.createElement('input');
     deleteBtn.type = 'button';
-    deleteBtn.className = 'btn';
+    deleteBtn.className = 'todobtn';
+    deleteBtn.style.marginRight = '3%';
     deleteBtn.value = 'delete';
     deleteBtn.addEventListener('click', function () {
-        container.removeChild(todoItem);
+        //container.removeChild(todoItem);        //!!
         todoArray = todoArray.filter(item => item !== todoObj); //understanding: Array를 이것의 todoObj를 빼고 업데이트
+        rerender();
         saveTodo();
     });               
 
+    //seperator
+    const seperator = document.createElement('hr');
+    seperator.style.margin = '0.7%';
+    if ( count_pri == 1 ) {
+        seperator.style.marginTop = '0.2%';
+    } else if ( count_pri == 2 ) {
+        seperator.style.marginTop = '0.5%';
+    } else if ( count_pri == 3 ) {
+        seperator.style.marginTop = '1%';
+    } else {
+        seperator.style.marginTop = '1.4%';
+    }
+
     //packaging
+    todoItem.appendChild(priority);
     todoItem.appendChild(checkbox);
     todoItem.appendChild(textNode);
-    todoItem.appendChild(editBtn);
+    //to rightside
     todoItem.appendChild(deleteBtn);
+    todoItem.appendChild(editBtn);
+    todoItem.appendChild(downbtn);
+    todoItem.appendChild(upbtn);
+    //seperator
+    todoItem.appendChild(seperator);
     container.appendChild(todoItem);
 }
 
@@ -145,7 +224,16 @@ function eraseAll() {
     if(confirm('delete all?')){
         container.innerHTML = "";
         todoArray = [];
+        count_pri = 0;
         saveTodo();
         document.getElementById("todo").focus();
     }
+}
+
+function rerender() {
+    container.innerHTML = "";
+    count_pri = 0;
+    todoArray.forEach(item => {            
+            renderTodo(item);
+    });
 }
