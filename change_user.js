@@ -1,30 +1,27 @@
-const openUser = false; 
+/*
+TODO : if darkmode -> edit or x uesr -> reloaded with class popups userblock(must be, popups userblock dark_mode)
+*/
+
+let openUser = false; 
+let isBtnBlock = true;
 //const changeUserPopup = null; 
 const changeUserPopupAbove = document.createElement('div');
 changeUserPopupAbove.id = 'changeUserPopupAbove';
 changeUserPopupAbove.style.margin = 0;
 changeUserPopupAbove.style.padding = 0;
-changeUserPopupAbove.style.height = "100px";
+changeUserPopupAbove.style.height = "70px";
 changeUserPopupAbove.style.width = "300px";
 
 const changeUserPopupBelow = document.createElement('div');
 changeUserPopupBelow.id = 'changeUserPopupBelow';
+/*
 changeUserPopupBelow.style.margin = 0;
 changeUserPopupBelow.style.padding = 0;
-changeUserPopupBelow.style.height = "300px";
+changeUserPopupBelow.style.height = "330px";
 changeUserPopupBelow.style.width = "300px";
-changeUserPopupBelow.style.boxShadow = "0 4px 10px rgba(6, 51, 198, 0.3)"; //TODO : erase it later
-
-// loading users & current user is ganz oben //TODO : 이거 하자
-console.log( userMeta.users);
-/*
-userMeta.users.foreach(item => {
-    const userBlock = document.createElement('div');
-    userBlock.className = 'userBlock';
-    userBlock.textContent = item;
-    changeUserPopupBelow.appendChild(userBlock);
-});
 */
+
+renderUser();
 
 const userclose = document.createElement('input');
 userclose.id = 'userclose';
@@ -66,6 +63,25 @@ addUserName.type = 'text';
 addUserName.style.width = "150px";
 addUserName.style.height = "15px";
 addUserName.style.transform = "translate(60%, 210%)";
+addUserName.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            document.getElementById("addUserOk").click();
+        }
+    });
+//shadow. limit input-length with px
+const aUNShadow = document.createElement('span'); 
+aUNShadow.style.visibility = 'hidden';
+aUNShadow.style.whiteSpace = 'pre';
+let aUNlastValue = '';
+addUserName.addEventListener('input', () => {
+    aUNShadow.textContent = addUserName.value;
+    if (aUNShadow.offsetWidth > 100) {
+        addUserName.value = aUNlastValue;
+    } else {
+        aUNlastValue = addUserName.value;
+    }
+});
 
 const addUserOk = document.createElement('input');
 addUserOk.id = "addUserOk";
@@ -76,7 +92,17 @@ addUserOk.style.width = "100px";
 addUserOk.style.height = "35px";
 addUserOk.style.transform = "translate(40%, 250%)";
 addUserOk.addEventListener('click', function() {
-    confirmUser();
+    if (addUserName.value.trim()) {
+        if (userMeta.users.includes(addUserName.value.trim())) {
+            addUserName.value = '';
+            alert('there is already a user with same name!');
+        } else {
+            confirmUser();
+        }
+    } else {
+        addUserName.value = '';
+        alert("please write something");
+    }
 })
 
 const addUserX = document.createElement('input');
@@ -88,6 +114,7 @@ addUserX.style.height = "35px";
 addUserX.style.transform = "translate(160%, 250%)";
 addUserX.addEventListener('click', function() {
     closeAddUser();
+    addUserName.value = '';
 })
 
 
@@ -133,15 +160,10 @@ function addUser() {
     addUserBoxPopup.style.display = 'block';
     addUserBoxPopup.appendChild(addUserName0);
     addUserBoxPopup.appendChild(addUserName);
+    document.body.appendChild(aUNShadow);
     document.getElementById("addUserName").focus();
     addUserBoxPopup.appendChild(addUserOk);
     addUserBoxPopup.appendChild(addUserX);    
-    addUserName.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            document.getElementById("addUserOk").click();
-        }
-    });
 }
 
 function closeAddUser() {
@@ -150,6 +172,108 @@ function closeAddUser() {
 
 function confirmUser() {
     addUserBoxPopup.style.display = 'none';
-    alert("sent User Name ");
-    
+    userMeta.users.push(addUserName.value);
+    saveUser();
+    renderUser();
+    localStorage.setItem(`todo_${addUserName.value}`,JSON.stringify([]));
+    addUserName.value = '';
+}
+
+function saveUser() {
+    localStorage.setItem('userMeta', JSON.stringify(userMeta));
+}
+
+function renderUser() {
+    changeUserPopupBelow.innerHTML = "";
+    userMeta.users.forEach(item => {
+        const userBlock = document.createElement('div');
+        userBlock.className = 'popups userBlock';
+        userBlock.addEventListener("mouseenter", () => {
+            userBlock.classList.toggle("mouseon_user");
+        });
+        userBlock.addEventListener("mouseleave", () => {
+            userBlock.classList.remove("mouseon_user");
+        });
+        userBlock.addEventListener("click", () => {
+            if(isBtnBlock) {
+                userMeta.currentUser = item;
+                saveUser();
+                document.getElementById('user').textContent = `User : ${userMeta.currentUser}`;
+                loadTodo();
+                rerender();
+            }
+            isBtnBlock = true;
+            
+        });
+        const userBlockLeft = document.createElement('div');
+        const userBlockRight = document.createElement('div');
+        const userBlockName = document.createElement('span');
+        userBlockName.textContent = item;
+        userBlockName.position = 'absolute';
+        userBlockName.style.margin = '5%';        
+        /*
+        const userBlockText = document.createElement('input');
+        userBlockText.type = 'text';
+        userBlockText.value = item;
+        */
+
+        const userBlcokEdit = document.createElement('input'); //TODO : ing
+        userBlcokEdit.type = 'button';
+        userBlcokEdit.value = '✎';
+        userBlcokEdit.style.paddingLeft = '3.8px';
+        userBlcokEdit.style.paddingRight = '3.8px';
+        userBlcokEdit.style.margin = '2px';
+        userBlcokEdit.addEventListener('click', () => {
+            isBtnBlock = false;
+            let newName = prompt("new Name", `${item}`).trim();
+            if (userMeta.users.includes(newName)) {
+                alert('there is already a user with same name. write other name');
+            } else {
+                //change user & CUser
+                let index = userMeta.users.indexOf(item);
+                if (userMeta.currentUser === userMeta.users[index]) {
+                    userMeta.currentUser = newName;
+                }
+                userMeta.users[index] = newName;
+                //save user, copy todo, x old todo, rerender
+                saveUser();
+                localStorage.setItem(`todo_${newName}`, localStorage.getItem(`todo_${item}`));
+                localStorage.removeItem(`todo_${item}`);
+                renderUser();
+                rerender();
+                document.getElementById('user').textContent = `User : ${userMeta.currentUser}`;
+            }
+        });
+
+        const userBlcokDelete = document.createElement('input');
+        userBlcokDelete.type = 'button';
+        userBlcokDelete.value = '✖';
+        userBlcokDelete.style.paddingLeft = '5px';
+        userBlcokDelete.style.paddingRight = '5px';
+        userBlcokDelete.style.margin = '2px';
+        userBlcokDelete.addEventListener('click', () => {
+            isBtnBlock = false;
+            if (item === userMeta.currentUser) {
+                alert("Current user cannot be deleted. Choose other user.");
+            } else {
+                if(confirm('Warning! This will delete all your todos as well.') == true) {
+
+                changeUserPopupBelow.removeChild(userBlock);
+                userMeta.users = userMeta.users.filter(e => e !== item);
+                saveUser();
+                renderUser();
+                localStorage.removeItem(`todo_${item}`);
+                            
+                }
+            }
+            
+        });
+
+        changeUserPopupBelow.appendChild(userBlock);
+        userBlock.appendChild(userBlockLeft);
+        userBlock.appendChild(userBlockRight);
+        userBlockLeft.appendChild(userBlockName);
+        userBlockRight.appendChild(userBlcokEdit);
+        userBlockRight.appendChild(userBlcokDelete);
+    });
 }

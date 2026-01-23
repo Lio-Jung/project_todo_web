@@ -7,17 +7,28 @@
     grid-template-columns: 3fr 8fr 3fr;
     }
 
-#inputLine{
+.inputLine{
         text-align: center;
     }
+
+.title {
+    display: inline;
+    margin:50px;
+}
 
 @media (max-width: 780px) {
     .mygrid {
         display: block;
     }
-
-    #inputLine{
+    .inputLine{
         text-align: left;
+    }
+
+}
+
+@media (max-width : 470px) {
+    .title {
+        margin: 0;
     }
 }
 
@@ -36,6 +47,27 @@
     padding: 20px;
 }
 
+.dark_mode {
+    background: rgb(40,40,40);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+}
+
+.userBlock {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-radius: 12px;
+    
+    padding: 10px;
+    margin: 5px;
+}      
+
+.mouseon_user {
+    background: rgb(120,120,120);
+}
+
+
 #changeUserGrid{
     position :fixed;
     z-index: 1;
@@ -53,4 +85,12 @@
     box-shadow: 0 4px 10px rgba(71, 60, 77, 0.3);
     background-color: white;
     border-radius: 12px;
+}
+
+#changeUserPopupBelow {
+    margin : 0;
+    padding : 0;
+    height: 330px;
+    width: 300px;
+    overflow-y: auto;
 }

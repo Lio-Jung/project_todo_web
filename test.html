@@ -4,25 +4,45 @@
 <h1> test field</h1>
 </head>
 <body>
-
-    <ol>
-        <li>dd <input type="button" value = 'dd'></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ol>
-
 <script>
 
-//////////////////////////// list with JS
+
+
 ////////////////////////////    
-let ol = document.querySelector('ol');
-let i = 1;
-ol.querySelectorAll('li').forEach(function(li) {
-    li.textContent = (i++) + ' ' + li.textContent;
+////////////////////////////    
+const input = document.createElement("input");
+input.type = 'text';
+const measure  = document.createElement('span');
+measure.style.visibility = 'hidden';
+
+
+let lastValue = "";
+
+
+/*
+input.addEventListener('input', () => {
+    if (input.offsetWidth > 100) {
+        alert(3);
+    } else {
+      alert(4);
+    }
+});
+*/
+
+
+input.addEventListener("input", () => {
+  measure.textContent = input.value;
+
+  if (measure.offsetWidth > 100) {
+    input.value = lastValue; // 입력 차단 (되돌림)
+  } else {
+    lastValue = input.value;
+  }
 });
 
 
+document.body.appendChild(input);
+document.body.appendChild(measure);
 
 ////////////////////////////    
 ////////////////////////////    
@@ -61,7 +81,7 @@ const saveUserMeta = () => {
 };
 
 
-// 1. input text뜸. 이름 치면 그 value이동됨.
+// 1. inputt text뜸. 이름 치면 그 value이동됨.
 let firstText = 'lio';
 // 2. user.users[value] = []; , user.currentUser = value
 user.users[firstText] = [];
@@ -74,7 +94,7 @@ user.users[user.currentUser].push({ text: "arbeiten", completed: false });
 let userStr = JSON.stringify(user.users);
 alert(userStr);
 // 4. change user / make new user
-let newUser = 'mom';                     //input으로 새로 만들어질 이름들
+let newUser = 'mom';                     //inputt으로 새로 만들어질 이름들
 user.users[newUser] = [];
 user.currentUser = newUser;
 //todo입력

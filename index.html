@@ -9,17 +9,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div style="text-align: center;">
-        <h3 class="title" style="display: inline; margin:50px;">TODO</h3>
+        <div class="inputLine">
+        <h3 class="title" >TODO</h3> <!-- style="display: inline; margin:50px;"-->
         <input type="button" value="Dark mode" class="btn" onclick="dayNightHandler(this)">
         <input type="button" value="Change User" class="btn" onclick="changeUser()">
         <span id='user' style="font-size: small; margin-left: 1%;">User : sample </span>
         </div>
 
-        <div id="inputLine">
+        <div class="inputLine">
         <input id="todo" type="text" placeholder="write todo">
         <input id="addbutton" type="button" value="Enter" class="btn" onclick="manageTodo()">
-        <input type="button" value="Delete whole todos" class="btn" onclick="eraseAll()">
+        <input type="button" value="Clear todos" class="btn" onclick="eraseAll()">
         </div>
 
         <div class="mygrid">
@@ -41,7 +41,6 @@
             let version = '';
             let userMeta = { users : [], currentUser : ''}; //!!
             let todoArray = [];
-            let parseTodo = [];
             const container = document.getElementById('todoCheckContainer');  
             //version checking & update
             version = localStorage.getItem('version');
@@ -56,20 +55,18 @@
                 localStorage.setItem(`todo_sample`, oldTodos);
             }
 
-            //loading
-            userMeta = JSON.parse(localStorage.getItem('userMeta') || '[]');    //!!
-            parseTodo = JSON.parse(localStorage.getItem(`todo_${userMeta.currentUser}`) || '[]');  //!!
-            //parsing            
-            parseTodo.forEach(item => {
-                todoArray.push(item);
+            loadMeta();
+            loadTodo();
             //rendering
+            todoArray.forEach(item => {
                 renderTodo(item);
             });
+            drawCUser();
 
             //add with "Enter" from textfield too like button
             const tvalue = document.getElementById('todo');
             tvalue.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
+                if (event.key === "Enter" || event.keyCode === 13) {
                     event.preventDefault();
                     document.getElementById("addbutton").click();
                 }

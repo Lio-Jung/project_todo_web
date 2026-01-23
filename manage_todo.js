@@ -115,6 +115,8 @@ function renderTodo(todoObj) {
         editBtn.parentNode.replaceChild(confirmBtn, this);
         textNode.parentNode.replaceChild(editText, textNode);
         deleteBtn.parentNode.replaceChild(editCancelbtn, deleteBtn);
+        //todoItem.removeChild(upbtn);
+        //todoItem.removeChild(downbtn);
         editText.focus();
         editText.select();
     });
@@ -134,6 +136,8 @@ function renderTodo(todoObj) {
         editText.parentNode.replaceChild(textNode, editText);
         confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
         editCancelbtn.parentNode.replaceChild(deleteBtn, editCancelbtn);
+        //todoItem.appendChild(upbtn);
+        //todoItem.appendChild(downbtn); //TODO : in mobile. those btn goes down
         saveTodo();
     })
     //edit text
@@ -217,6 +221,7 @@ function renderTodo(todoObj) {
     todoItem.appendChild(upbtn);
     //seperator
     todoItem.appendChild(seperator);
+
     container.appendChild(todoItem);
 }
 
@@ -236,4 +241,17 @@ function rerender() {
     todoArray.forEach(item => {            
             renderTodo(item);
     });
+}
+
+function drawCUser() {
+    //current user
+            document.getElementById('user').textContent = `User : ${userMeta.currentUser}`;
+}
+
+function loadMeta() {
+    userMeta = JSON.parse(localStorage.getItem('userMeta') || '[]');    
+}
+
+function loadTodo() {
+    todoArray = JSON.parse(localStorage.getItem(`todo_${userMeta.currentUser}`) || '[]');  
 }
