@@ -94,3 +94,10 @@
     width: 300px;
     overflow-y: auto;
 }
+
+#todoItem {
+    display: grid;
+    grid-template-columns: 35px 21px 8fr 5fr;
+}
+
+#todoItemLeft { text-align: center;}

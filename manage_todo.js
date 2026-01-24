@@ -4,7 +4,7 @@ function manageTodo() {
     const target = document.querySelector('#todo'); 
     const newTodo = target.value.trim();  //newTodo's value can change but 'const' means rightside cannot change
     if (newTodo === 'write todo' || newTodo === '') {
-    alert('please write your todo!');
+    target.value = '';
     } else {
         const todoObj = { text: newTodo, completed: false };
         todoArray.push(todoObj);
@@ -23,7 +23,13 @@ function saveTodo() {
 function renderTodo(todoObj) {
     count_pri ++;
     const todoItem = document.createElement('div');
-
+    todoItem.id = 'todoItem';
+    const todoItemLeft = document.createElement('div');
+    todoItemLeft.id = 'todoItemLeft';
+    const todoItemLeft2 = document.createElement('div');
+    const todoItemCenter = document.createElement('div');
+    const todoItemRight = document.createElement('div');
+    
     //priority
     const priority = document.createElement('span');
     priority.id = 'priority';
@@ -32,18 +38,21 @@ function renderTodo(todoObj) {
     if ( count_pri == 1 ){
         priority.style.color = "gold";
         priority.style.fontSize = '150%';
-        priority.textContent = " " + count_pri + " " ;
+        priority.textContent = "  " + count_pri + "  " ;
+        //priority.textContent = " " + count_pri + " " ;
         priority.style.fontWeight = "900"; 
     } if ( count_pri == 2 ){
         priority.style.color = "silver";
         priority.style.fontSize = '140%';
-        priority.textContent = " " + count_pri + " " ;
+        priority.textContent = "  " + count_pri + "  " ;
+        //priority.textContent = " " + count_pri + " " ;
         priority.style.fontWeight = "700";
         priority.style.marginRight = '0.4%';
     } if ( count_pri == 3 ) {
         priority.style.color =  "rgba(205, 127, 50, 1)";
         priority.style.fontSize = '130%';
-        priority.textContent = " " + count_pri + " " ;
+        priority.textContent = "  " + count_pri + "  " ;
+        //priority.textContent = " " + count_pri + " " ;
         priority.style.fontWeight = "500";
         priority.style.marginRight = '0.6%';
     }
@@ -115,8 +124,6 @@ function renderTodo(todoObj) {
         editBtn.parentNode.replaceChild(confirmBtn, this);
         textNode.parentNode.replaceChild(editText, textNode);
         deleteBtn.parentNode.replaceChild(editCancelbtn, deleteBtn);
-        //todoItem.removeChild(upbtn);
-        //todoItem.removeChild(downbtn);
         editText.focus();
         editText.select();
     });
@@ -136,8 +143,6 @@ function renderTodo(todoObj) {
         editText.parentNode.replaceChild(textNode, editText);
         confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
         editCancelbtn.parentNode.replaceChild(deleteBtn, editCancelbtn);
-        //todoItem.appendChild(upbtn);
-        //todoItem.appendChild(downbtn); //TODO : in mobile. those btn goes down
         saveTodo();
     })
     //edit text
@@ -200,6 +205,7 @@ function renderTodo(todoObj) {
     //seperator
     const seperator = document.createElement('hr');
     seperator.style.margin = '0.7%';
+    /*
     if ( count_pri == 1 ) {
         seperator.style.marginTop = '0.2%';
     } else if ( count_pri == 2 ) {
@@ -209,29 +215,34 @@ function renderTodo(todoObj) {
     } else {
         seperator.style.marginTop = '1.4%';
     }
+    */
 
     //packaging
-    todoItem.appendChild(priority);
-    todoItem.appendChild(checkbox);
-    todoItem.appendChild(textNode);
-    //to rightside
-    todoItem.appendChild(deleteBtn);
-    todoItem.appendChild(editBtn);
-    todoItem.appendChild(downbtn);
-    todoItem.appendChild(upbtn);
-    //seperator
-    todoItem.appendChild(seperator);
+    todoItemLeft.appendChild(priority);
+    todoItemLeft2.appendChild(checkbox);
+    todoItemCenter.appendChild(textNode);
+    todoItemRight.appendChild(deleteBtn);
+    todoItemRight.appendChild(editBtn);
+    todoItemRight.appendChild(downbtn);
+    todoItemRight.appendChild(upbtn);    
 
     container.appendChild(todoItem);
+    todoItem.appendChild(todoItemLeft);
+    todoItem.appendChild(todoItemLeft2);
+    todoItem.appendChild(todoItemCenter);
+    todoItem.appendChild(todoItemRight);
+
+    //seperator
+    container.appendChild(seperator);
 }
 
 function eraseAll() {
-    if(confirm('delete all?')){
+    if(confirm(y.ask_clear)){
         container.innerHTML = "";
         todoArray = [];
         count_pri = 0;
         saveTodo();
-        document.getElementById("todo").focus();
+        document.getElementById("todo").focus();   
     }
 }
 
@@ -245,7 +256,7 @@ function rerender() {
 
 function drawCUser() {
     //current user
-            document.getElementById('user').textContent = `User : ${userMeta.currentUser}`;
+            document.getElementById('username').textContent = `${userMeta.currentUser}`;
 }
 
 function loadMeta() {

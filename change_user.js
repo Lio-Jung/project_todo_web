@@ -1,5 +1,6 @@
 /*
 TODO : if darkmode -> edit or x uesr -> reloaded with class popups userblock(must be, popups userblock dark_mode)
+TODO : language ko-en-ko    
 */
 
 let openUser = false; 
@@ -198,7 +199,7 @@ function renderUser() {
             if(isBtnBlock) {
                 userMeta.currentUser = item;
                 saveUser();
-                document.getElementById('user').textContent = `User : ${userMeta.currentUser}`;
+                document.getElementById('username').textContent = `${userMeta.currentUser}`;
                 loadTodo();
                 rerender();
             }
@@ -217,7 +218,7 @@ function renderUser() {
         userBlockText.value = item;
         */
 
-        const userBlcokEdit = document.createElement('input'); //TODO : ing
+        const userBlcokEdit = document.createElement('input');
         userBlcokEdit.type = 'button';
         userBlcokEdit.value = '✎';
         userBlcokEdit.style.paddingLeft = '3.8px';
@@ -245,7 +246,7 @@ function renderUser() {
             }
         });
 
-        const userBlcokDelete = document.createElement('input');
+        const userBlcokDelete = document.createElement('input'); 
         userBlcokDelete.type = 'button';
         userBlcokDelete.value = '✖';
         userBlcokDelete.style.paddingLeft = '5px';
@@ -262,11 +263,9 @@ function renderUser() {
                 userMeta.users = userMeta.users.filter(e => e !== item);
                 saveUser();
                 renderUser();
-                localStorage.removeItem(`todo_${item}`);
-                            
+                localStorage.removeItem(`todo_${item}`);            
                 }
             }
-            
         });
 
         changeUserPopupBelow.appendChild(userBlock);
