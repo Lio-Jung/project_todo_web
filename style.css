@@ -7,6 +7,12 @@
     grid-template-columns: 3fr 8fr 3fr;
     }
 
+
+
+#titlegridRight {
+    text-align: right;
+}
+
 .inputLine{
         text-align: center;
     }
@@ -24,6 +30,10 @@
         text-align: left;
     }
 
+    #titlegrid {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+}
 }
 
 @media (max-width : 470px) {
@@ -48,7 +58,7 @@
 }
 
 .dark_mode {
-    background: rgb(40,40,40);
+    background-color: rgb(40,40,40);
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
 }
@@ -70,7 +80,7 @@
 
 #changeUserGrid{
     position :fixed;
-    z-index: 1;
+    z-index: 20;
 }
 #addUserBoxPopupPopup {
     display: none;
@@ -81,7 +91,7 @@
     margin-left: -12%; /*width의 반만큼 음수로*/
     height: 140px; /*세로길이 설정은 여기서*/
     margin-top: -260px; /*height의 반만큼 음수로*/
-    z-index: 99;
+    z-index: 30;
     box-shadow: 0 4px 10px rgba(71, 60, 77, 0.3);
     background-color: white;
     border-radius: 12px;
@@ -97,7 +107,28 @@
 
 #todoItem {
     display: grid;
-    grid-template-columns: 35px 21px 8fr 5fr;
+    grid-template-columns: 35px 21px 8fr 200px;
 }
 
 #todoItemLeft { text-align: center;}
+
+#settingPopup {
+    display: none;
+    position : fixed;
+    right: 10px;
+    top: 50%;
+    width: 120px; /*가로길이 설정은 여기서*/
+    height: 300px; /*세로길이 설정은 여기서*/
+    margin-top: -260px; /*height의 반만큼 음수로*/
+    z-index: 10;
+    padding: 10px;
+    grid-template-rows: 30px 1fr 20px;
+    box-shadow: 0 4px 10px rgba(71, 60, 77, 0.3);
+    border-radius: 12px;
+}
+
+.setdiv {
+    padding: 7px;
+    font-size: small;
+    border-radius: 5%;
+}

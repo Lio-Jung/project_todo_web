@@ -3,8 +3,9 @@ let count_pri = 0;
 function manageTodo() {
     const target = document.querySelector('#todo'); 
     const newTodo = target.value.trim();  //newTodo's value can change but 'const' means rightside cannot change
-    if (newTodo === 'write todo' || newTodo === '') {
-    target.value = '';
+    if (newTodo === lang("write_todo") || newTodo === '') {
+        alert(lang("empty_todo"));
+        target.value = '';
     } else {
         const todoObj = { text: newTodo, completed: false };
         todoArray.push(todoObj);
@@ -78,6 +79,11 @@ function renderTodo(todoObj) {
     upbtn.type = 'button';
     upbtn.className = 'todobtn';
     upbtn.value = '▲'
+
+    upbtn.style.paddingLeft = '5px';
+    upbtn.style.paddingRight = '5px';
+    upbtn.style.margin = '2px';
+    upbtn.style.paddingTop = '3.5px';
     upbtn.addEventListener('click', () => {
         let temp = todoArray[index-1];
         if (temp) {
@@ -92,6 +98,12 @@ function renderTodo(todoObj) {
     downbtn.type = 'button';
     downbtn.className = 'todobtn';
     downbtn.value = '▼';
+
+    downbtn.style.paddingLeft = '5px';
+    downbtn.style.paddingRight = '5px';
+    downbtn.style.margin = '2px';
+    downbtn.style.paddingTop = '3.5px';
+    
     downbtn.addEventListener('click', () => {
         let temp = todoArray[index+1];
         if (temp) {
@@ -118,8 +130,14 @@ function renderTodo(todoObj) {
     const editBtn = document.createElement('input');
     editBtn.type = 'button';
     editBtn.className = 'todobtn';
-    editBtn.value = 'edit';
+    editBtn.value = "✎";
     editBtn.style.marginLeft = '2%';
+
+
+    editBtn.style.paddingLeft = '3.8px';
+    editBtn.style.paddingRight = '3.8px';
+    editBtn.style.margin = '2px';
+
     editBtn.addEventListener('click', function(){
         editBtn.parentNode.replaceChild(confirmBtn, this);
         textNode.parentNode.replaceChild(editText, textNode);
@@ -131,7 +149,7 @@ function renderTodo(todoObj) {
     const confirmBtn = document.createElement('input');
     confirmBtn.type = 'button';
     confirmBtn.className = 'todobtn';
-    confirmBtn.value = 'confirm';
+    confirmBtn.value = lang("confirm");
     confirmBtn.id = 'confirmBtn';
     confirmBtn.addEventListener('mousedown', () => {
         ignoreBlur = true;
@@ -175,7 +193,7 @@ function renderTodo(todoObj) {
     const editCancelbtn = document.createElement('input');
     editCancelbtn.type = 'button';
     editCancelbtn.className = 'todobtn';
-    editCancelbtn.value = 'cancel';
+    editCancelbtn.value = lang('cancel');
     editCancelbtn.id = 'editCancelbtn';
     editCancelbtn.addEventListener('click', () => {
         editText.value = todoObj.text;
@@ -194,7 +212,12 @@ function renderTodo(todoObj) {
     deleteBtn.type = 'button';
     deleteBtn.className = 'todobtn';
     deleteBtn.style.marginRight = '3%';
-    deleteBtn.value = 'delete';
+    deleteBtn.value = "✖";
+
+    deleteBtn.style.paddingLeft = '5px';
+    deleteBtn.style.paddingRight = '5px';
+    deleteBtn.style.margin = '2px';
+
     deleteBtn.addEventListener('click', function () {
         //container.removeChild(todoItem);        //!!
         todoArray = todoArray.filter(item => item !== todoObj); //understanding: Array를 이것의 todoObj를 빼고 업데이트
@@ -237,7 +260,7 @@ function renderTodo(todoObj) {
 }
 
 function eraseAll() {
-    if(confirm(y.ask_clear)){
+    if(confirm(lang("ask_clear"))){
         container.innerHTML = "";
         todoArray = [];
         count_pri = 0;

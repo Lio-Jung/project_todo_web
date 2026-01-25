@@ -1,6 +1,4 @@
 {
-    "dark_mode": "Dark Mode",
-    "light_mode": "Light mode",
     "change_user": "Change User",
     "user": "User : ",
 
@@ -13,12 +11,16 @@
     "delete": "delete",
 
     "create_user": "Create User",
-    "user_name": "User Name",
+    "user_name": "User Name: ",
     "confirm": "confirm",
-    "cancle": "cancle",
+    "cancel": "cancle",
     "same_name": "there is already a user with same name!",
     "warn_other_user": "Current user cannot be deleted.",
     "ask_x_user": "Warning! This will delete all your todos as well.",
     "new_name": "new Name",
-    "edit_same_name": "there is already a user with same name. write other name"
+    "new_name_o": "confirm",
+    "new_name_x": "cancel",
+    "edit_same_name": "there is already a user with same name. write other name",
+
+    "language_change": "Language"
 }

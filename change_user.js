@@ -35,13 +35,15 @@ userclose.addEventListener('click', function(){
 
 const newUser = document.createElement('input');
 newUser.type = 'button';
-newUser.value = 'Create User';
+//newUser.value = window.i18n.create_user; //?
 newUser.style.transform = "translate(0%, -20%)";
 newUser.style.width = "290px";
 newUser.style.height = "40px";
 newUser.addEventListener('click', function() {
     addUser();
 })
+
+
 
 const addUserBoxPopup = document.createElement('div'); 
 addUserBoxPopup.id = "addUserBoxPopupPopup";
@@ -52,7 +54,7 @@ document.body.appendChild(addUserBoxPopup);
 
 
 const addUserName0 = document.createElement('SPAN');
-addUserName0.innerHTML = 'User Name: ';
+
 addUserName0.style.position = "absolute";
 addUserName0.style.fontSize = "15px";
 addUserName0.style.transform ="translate(10%, 200%)";
@@ -96,7 +98,7 @@ addUserOk.addEventListener('click', function() {
     if (addUserName.value.trim()) {
         if (userMeta.users.includes(addUserName.value.trim())) {
             addUserName.value = '';
-            alert('there is already a user with same name!');
+            alert(lang("same_name"));
         } else {
             confirmUser();
         }
@@ -255,9 +257,9 @@ function renderUser() {
         userBlcokDelete.addEventListener('click', () => {
             isBtnBlock = false;
             if (item === userMeta.currentUser) {
-                alert("Current user cannot be deleted. Choose other user.");
+                alert(lang("warn_other_user"));
             } else {
-                if(confirm('Warning! This will delete all your todos as well.') == true) {
+                if(confirm() == true) {
 
                 changeUserPopupBelow.removeChild(userBlock);
                 userMeta.users = userMeta.users.filter(e => e !== item);
@@ -275,4 +277,9 @@ function renderUser() {
         userBlockRight.appendChild(userBlcokEdit);
         userBlockRight.appendChild(userBlcokDelete);
     });
+}
+
+function valuesCUjs() {
+    newUser.value = lang("create_user");
+    addUserName0.innerHTML = lang("user_name");
 }

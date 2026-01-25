@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="language.js"></script>
         <script src="night_day.js"></script>
         <script src="manage_todo.js"></script>
         <script src="change_user.js" defer></script>
-        <script src="language.js"></script>
+        <script src="setting.js" defer></script>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div class="inputLine">
+        <div id="titlegrid" class="inputLine">
+        <div>
         <h3 class="title" >TODO</h3> <!-- style="display: inline; margin:50px;"-->
-        <input type="button" id='dark_mode' value="Dark mode" class="btn" onclick="dayNightHandler(this)">
-        <input type="button" id="change_user" value="Change User" class="btn" onclick="changeUser()">
+        </div>
+        <div id="titlegridRight">
         <span id="user" style="font-size: small; margin-left: 1%;">User :  </span>
         <span id="username" style="font-size: small; margin-left: 1%;">samlpe</span>
-        
+        <input type="button" id='setting' class="btn" value = "☰" onclick="settingOpen()">
+        </div>
         </div>
 
         <div class="inputLine">
@@ -58,11 +61,7 @@
 
             loadMeta();
             loadTodo();
-            //rendering
-            todoArray.forEach(item => {
-                renderTodo(item);
-            });
-            drawCUser();
+            loadLang_renderTodo();
 
             //add with "Enter" from textfield too like button
             const tvalue = document.getElementById('todo');
@@ -74,7 +73,22 @@
             });
 
 
-            changeLang();
+            function loadLang_renderTodo() {
+                //load language + render todo
+                async function init() {
+                    await loadLang('en');
+                //rendering
+                todoArray.forEach(item => {
+                    renderTodo(item);
+                });
+                drawCUser();
+                valuesCUjs(); //TODO : Change_user.js binding
+                valuesSetjs();
+
+                renderLang();
+                }
+                init();
+            }
         </script>
         <br>           
 

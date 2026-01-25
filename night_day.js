@@ -1,28 +1,4 @@
 let isDark = false;
-/*
-function dayNightHandler(self){
-    var target = document.querySelector('body');
-    var popups = document.querySelectorAll('.popups');
-
-    if (self.value === 'Dark mode') {
-    target.style.backgroundColor = 'rgba(40,40,40, 1)';
-    target.style.color = 'white';
-    popups.forEach(e => {
-        e.classList.toggle('dark_mode');
-    });
-
-    self.value = 'Light mode';
-    } else {    
-    target.style.backgroundColor = 'white';
-    target.style.color = 'black';
-    popups.forEach(e => {
-        e.classList.remove('dark_mode');
-    });
-
-    self.value = 'Dark mode';
-    }
-}
-*/
 
 function dayNightHandler(self){
     var target = document.querySelector('body');
@@ -34,7 +10,8 @@ function dayNightHandler(self){
     popups.forEach(e => {
         e.classList.toggle('dark_mode');
     });
-    //isDark = true;
+    //self.value = lang("light_mode");
+    isDark = true;
     
     } else {    
     target.style.backgroundColor = 'white';
@@ -42,7 +19,7 @@ function dayNightHandler(self){
     popups.forEach(e => {
         e.classList.remove('dark_mode');
     });
-
-    //isDark = false;
+    //self.value = lang("dark_mode");
+    isDark = false;
     }
 }
