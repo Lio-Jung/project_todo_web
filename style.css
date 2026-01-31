@@ -154,10 +154,9 @@
     display: none;
     position : fixed;
     right: 10px;
-    top: 50%;
-    width: 120px; /*가로길이 설정은 여기서*/
-    height: 300px; /*세로길이 설정은 여기서*/
-    margin-top: -260px; /*height의 반만큼 음수로*/
+    top: 40px;
+    width: 120px;
+    height: 300px; 
     z-index: 10;
     padding: 10px;
     grid-template-rows: 30px 1fr 20px;
