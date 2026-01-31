@@ -39,7 +39,11 @@
 
         <script>
             let username = 'Lio';
-            let defaultLang = 'en';
+            let defaultLang = (navigator.language || navigator.userLanguage || '').slice(0, 2);;
+            if (defaultLang === 'ko' || defaultLang === 'en') {
+            } else {
+                defaultLang = 'en';
+            }
 
             //open page
             document.getElementById("todo").focus();
@@ -49,6 +53,15 @@
             const container = document.getElementById('todoCheckContainer');  
             //version checking & update
             version = localStorage.getItem('version');
+            if ( version !== '1.0' && version !== '1.1') { 
+                version = '1.0';                                                   //version change!!
+                let samplemeta = { users : ['sample'], currentUser : 'sample',};
+                let oldTodos = localStorage.getItem(`user_Lio`) || '[]';
+                localStorage.setItem('version', version);
+                localStorage.setItem('userMeta', JSON.stringify(samplemeta));
+                localStorage.setItem(`todo_sample`, oldTodos);
+                console.log('updated version : ' + version);
+            }
             if (version !== '1.1') {
                 version = '1.1';                
                 let temmeta = JSON.parse(localStorage.getItem('userMeta') || '[]');    
@@ -56,16 +69,10 @@
                 temmeta.currentLangauge = defaultLang;
                 localStorage.setItem('userMeta', JSON.stringify(temmeta));
                 localStorage.setItem('version', version);
-                
-            } else if ( version !== '1.0' ) { 
-                version = '1.0';                                                   //version change!!
-                let samplemeta = { users : ['sample'], currentUser : 'sample',};
-                let oldTodos = localStorage.getItem(`user_Lio`) || '[]';
-                localStorage.setItem('version', version);
-                localStorage.setItem('userMeta', JSON.stringify(samplemeta));
-                localStorage.setItem(`todo_sample`, oldTodos);
+                console.log('updated version : ' + version);
             }
             console.log('version : ' + version);
+            
 
             loadMeta();
             loadTodo();
@@ -84,14 +91,14 @@
             function loadLang_renderTodo() {
                 //load language + render todo
                 async function init() {
-                    await loadLang('en');
+                    await loadLang(userMeta.currentLangauge);
                 //rendering
                 todoArray.forEach(item => {
                     renderTodo(item);
                 });
                 drawCUser();
                 valuesCUjs();
-                valuesSetjs();
+                //valuesSetjs();
                 valueLangjs();
 
                 renderLang();

@@ -56,6 +56,7 @@ let isLang = true; //TODO : maybe delete it..?
 langdiv.addEventListener('click', () => {    
     let target = langpopup;
     closeAll_openOne(target);
+    langSel.focus();
 });
 document.body.appendChild(langpopup); //from language.js... cuz setting.js has <defer>
 setdivmain.appendChild(langdiv);
@@ -96,40 +97,45 @@ settar.forEach(item => {
     });
 });
 
-
-
-//TODO : language div aktiv + 컴터 언어설정에 따라 자동번역
-//TODO : txt파일 읽어서 worklog보이게하기.
-
 //work log
 const worklog = document.createElement('div');
 worklog.textContent = 'work log';
 worklog.style.fontSize = '10px';
 worklog.addEventListener('click', () =>{
     worklogdiv.style.display = 'grid';
+    worklogContent.textContent = logtxt;
 });
 setdivbot.appendChild(worklog);
+let logtxt = loadWorkLog();
 
 const worklogdiv = document.createElement('div');
 worklogdiv.id = "worklogdiv";
 worklogdiv.style.padding = '10px';
-worklogdiv.textContent = '';
 document.body.appendChild(worklogdiv);
 //grid 1,2
 const workgrid1 = document.createElement('div');
+workgrid1.style.width = '260px';
 const workgrid2 = document.createElement('div');
 workgrid1.style.textAlign = 'right';
 worklogdiv.appendChild(workgrid1);
 worklogdiv.appendChild(workgrid2);
-const workX = document.createElement('div');
-workX.textContent = 'x';
+const workX = document.createElement('input');
+workX.type = 'button';
+workX.style.position ='fixed';
+workX.value = 'x';
 workX.addEventListener('click', () => {
    worklogdiv.style.display = 'none';
 });
 workgrid1.appendChild(workX);
 
+const worklogContent = document.createElement('div');
+worklogContent.style.whiteSpace = 'pre';
+worklogContent.style.fontSize = '10px';
+workgrid2.appendChild(worklogContent);
+
 function valuesSetjs() {
-    console.log(2);
+    return;
+    //console.log(`valuesSetjs(); in setting.js is empty`);
 }
 
 function settingOpen() {
@@ -141,23 +147,31 @@ function settingOpen() {
         //close whole setting too
         try {
             closeAll_openOne(); // = all close
-        } catch {
-
-        }
-    }
-    
+        } catch {}
+    }   
 }
-
 
 function closeAll_openOne(target) {
     let temp = document.querySelectorAll('.div_popups');
-temp.forEach(item => {
-    if (item === target) {
-    } else {
-        try {
-            item.classList.remove('show_grid');
-        } catch {}
-    }        
-});
-target.classList.toggle('show_grid'); 
+    temp.forEach(item => {
+        if (item === target) {
+        } else {
+            try {
+                item.classList.remove('show_grid');
+            } catch {}
+        }        
+    });
+    target.classList.toggle('show_grid'); 
+}
+
+
+async function loadWorkLog() {
+  try {
+    const x = await fetch(`./work_log.txt`);
+    a = await x.text();
+    console.log('log was read.');
+    logtxt = a;
+  } catch (error) {
+    console.log(`log was not readable. ${error}`);
+  }
 }

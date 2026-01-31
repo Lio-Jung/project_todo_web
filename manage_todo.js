@@ -70,6 +70,7 @@ function renderTodo(todoObj) {
     
     //text
     const textNode = document.createElement('span');
+    textNode.id = 'textNode';
     textNode.textContent = " " + todoObj.text + ' ';
     textNode.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
 
@@ -139,6 +140,8 @@ function renderTodo(todoObj) {
     editBtn.style.margin = '2px';
 
     editBtn.addEventListener('click', function(){
+        upbtn.style.display = 'none';
+        downbtn.style.display = 'none';
         editBtn.parentNode.replaceChild(confirmBtn, this);
         textNode.parentNode.replaceChild(editText, textNode);
         deleteBtn.parentNode.replaceChild(editCancelbtn, deleteBtn);
@@ -162,10 +165,13 @@ function renderTodo(todoObj) {
         confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
         editCancelbtn.parentNode.replaceChild(deleteBtn, editCancelbtn);
         saveTodo();
+        upbtn.style.display = 'block';
+        downbtn.style.display = 'block';
     })
     //edit text
     const editText = document.createElement('input');
     editText.type = 'text';
+    editText.style.width = '120px';
     editText.value = todoObj.text;
     let ignoreBlur = false;
     editText.addEventListener('blur', e =>{
@@ -174,6 +180,8 @@ function renderTodo(todoObj) {
             return;                                                           
         } else {
         document.getElementById('editCancelbtn').click();
+        upbtn.style.display = 'block';
+        downbtn.style.display = 'block';
         }   
     })
     editText.addEventListener('keydown', e => {
@@ -200,6 +208,8 @@ function renderTodo(todoObj) {
         editText.parentNode.replaceChild(textNode, editText);
         confirmBtn.parentNode.replaceChild(editBtn, confirmBtn);
         editCancelbtn.parentNode.replaceChild(deleteBtn, editCancelbtn);
+        upbtn.style.display = 'block';
+        downbtn.style.display = 'block';
     })
 
     //delete button  
