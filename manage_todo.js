@@ -78,13 +78,8 @@ function renderTodo(todoObj) {
     const index = todoArray.indexOf(todoObj);
     const upbtn = document.createElement('input');
     upbtn.type = 'button';
-    upbtn.className = 'todobtn';
+    upbtn.className = 'todobtn defbtn';
     upbtn.value = '▲'
-
-    upbtn.style.paddingLeft = '5px';
-    upbtn.style.paddingRight = '5px';
-    upbtn.style.margin = '2px';
-    upbtn.style.paddingTop = '3.5px';
     upbtn.addEventListener('click', () => {
         let temp = todoArray[index-1];
         if (temp) {
@@ -97,14 +92,8 @@ function renderTodo(todoObj) {
     //down btn
     const downbtn = document.createElement('input');
     downbtn.type = 'button';
-    downbtn.className = 'todobtn';
+    downbtn.className = 'todobtn defbtn';
     downbtn.value = '▼';
-
-    downbtn.style.paddingLeft = '5px';
-    downbtn.style.paddingRight = '5px';
-    downbtn.style.margin = '2px';
-    downbtn.style.paddingTop = '3.5px';
-    
     downbtn.addEventListener('click', () => {
         let temp = todoArray[index+1];
         if (temp) {
@@ -130,15 +119,8 @@ function renderTodo(todoObj) {
     //edit button
     const editBtn = document.createElement('input');
     editBtn.type = 'button';
-    editBtn.className = 'todobtn';
+    editBtn.className = 'todobtn defbtn';
     editBtn.value = "✎";
-    editBtn.style.marginLeft = '2%';
-
-
-    editBtn.style.paddingLeft = '3.8px';
-    editBtn.style.paddingRight = '3.8px';
-    editBtn.style.margin = '2px';
-
     editBtn.addEventListener('click', function(){
         upbtn.style.display = 'none';
         downbtn.style.display = 'none';
@@ -220,19 +202,15 @@ function renderTodo(todoObj) {
     그리고 renderTodo()로 생성된 것 체크박스,텍스트,삭제버튼은 한 묶음이다. 그래서 삭제버튼에서 container.removeChild(todoItem);를 했을 때, 3개가 다 사라진다.*/
     const deleteBtn = document.createElement('input');
     deleteBtn.type = 'button';
-    deleteBtn.className = 'todobtn';
-    deleteBtn.style.marginRight = '3%';
+    deleteBtn.className = 'todobtn defbtn';    
     deleteBtn.value = "✖";
-
-    deleteBtn.style.paddingLeft = '5px';
-    deleteBtn.style.paddingRight = '5px';
-    deleteBtn.style.margin = '2px';
-
     deleteBtn.addEventListener('click', function () {
-        //container.removeChild(todoItem);        //!!
-        todoArray = todoArray.filter(item => item !== todoObj); //understanding: Array를 이것의 todoObj를 빼고 업데이트
-        rerender();
-        saveTodo();
+        if (confirm(lang("delete"))) {
+            //container.removeChild(todoItem);        //!!
+            todoArray = todoArray.filter(item => item !== todoObj); //understanding: Array를 이것의 todoObj를 빼고 업데이트
+            rerender();
+            saveTodo();
+        }
     });               
 
     //seperator

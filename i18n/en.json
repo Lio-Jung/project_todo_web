@@ -8,7 +8,7 @@
     "clear_todos": "Clear todos",
     "ask_clear": "delete all?",
     "edit": "edit",
-    "delete": "delete",
+    "delete": "do you want to delete that todo?",
 
     "create_user": "Create User",
     "user_name": "User Name: ",

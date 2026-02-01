@@ -8,7 +8,7 @@
     "clear_todos": "할 일 초기화",
     "ask_clear": "할 일을 전부 삭제하시겠습니까?",
     "edit": "편집",
-    "delete": "삭제",
+    "delete": "할 일을 삭제하시겠습니까?",
 
     "create_user": "사용자 생성", 
     "user_name": "사용자 이름: ",   

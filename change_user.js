@@ -23,28 +23,22 @@ newUser.addEventListener('click', function() {
     addUser();
 })
 
-const addUserBoxPopup = document.createElement('div'); //ing
+const addUserBoxPopup = document.createElement('div');
 addUserBoxPopup.id = "addUserBoxPopupPopup";
-addUserBoxPopup.className = "popups";
+addUserBoxPopup.className = "div_popups";
 document.body.appendChild(addUserBoxPopup);
-
-
-    
-
-
+//grid 1,2
+const usergrid1 = document.createElement('div');
+const usergrid2 = document.createElement('div');
+addUserBoxPopup.appendChild(usergrid1);
+addUserBoxPopup.appendChild(usergrid2);
 
 const addUserName0 = document.createElement('SPAN');
-addUserName0.style.position = "absolute";
-addUserName0.style.fontSize = "15px";
-addUserName0.style.transform ="translate(10%, 200%)";
+addUserName0.id = 'addUserName0';
 
 const addUserName = document.createElement('input');
-addUserName.style.position = "absolute";
-addUserName.id = "addUserName";
 addUserName.type = 'text';
-addUserName.style.width = "150px";
-addUserName.style.height = "15px";
-addUserName.style.transform = "translate(60%, 210%)";
+addUserName.id = "addUserName";
 addUserName.addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault();
@@ -68,11 +62,10 @@ addUserName.addEventListener('input', () => {
 const addUserOk = document.createElement('input');
 addUserOk.id = "addUserOk";
 addUserOk.type = "button";
-addUserOk.style.position = "absolute";
-addUserOk.value = 'confirm';
 addUserOk.style.width = "100px";
 addUserOk.style.height = "35px";
-addUserOk.style.transform = "translate(40%, 250%)";
+addUserOk.style.marginLeft = '10px';
+addUserOk.style.marginRight = '10px';
 addUserOk.addEventListener('click', function() {
     if (addUserName.value.trim()) {
         if (userMeta.users.includes(addUserName.value.trim())) {
@@ -89,20 +82,26 @@ addUserOk.addEventListener('click', function() {
 
 const addUserX = document.createElement('input');
 addUserX.type = 'button';
-addUserX.style.position = "absolute";
-addUserX.value = 'cancel';
 addUserX.style.width = "100px";
 addUserX.style.height = "35px";
-addUserX.style.transform = "translate(160%, 250%)";
+addUserX.style.marginLeft = '10px';
+addUserX.style.marginRight = '10px';
 addUserX.addEventListener('click', function() {
-    closeAddUser();
+    try {
+        addUserBoxPopup.classList.remove('show_grid')
+    } catch {}
     addUserName.value = '';
 })
+    
+usergrid1.appendChild(addUserName0);
+usergrid1.appendChild(addUserName);
+document.body.appendChild(aUNShadow);
+usergrid2.appendChild(addUserOk);
+usergrid2.appendChild(addUserX);    
 
 const changeUserPopup = document.createElement('div');
 changeUserPopup.id = "changeUserGrid";
 changeUserPopup.className = "div_popups";
-//document.body.appendChild(changeUserPopup);
 //grid 1,2,3
 const cugrid1 = document.createElement('div');
 const cugrid2 = document.createElement('div');
@@ -119,28 +118,8 @@ cugrid3.id = 'changeUserPopupBelow';
 
 renderUser();
 
-function changeUser() {  //TODO : delete later
-    changeUserPopup.classList.toggle('show_grid');
-
-    openUser = !openUser;
-     if (false) {
-        if (changeUserPopup) {
-            //changeUserPopup.style.display = "none";
-            
-            addUserBoxPopup.style.display = "none";
-        } 
-    } else {
-       
-    }
-}
-
 function addUser() {
-    addUserBoxPopup.style.display = 'block';
-    addUserBoxPopup.appendChild(addUserName0);
-    addUserBoxPopup.appendChild(addUserName);
-    document.body.appendChild(aUNShadow);
-    addUserBoxPopup.appendChild(addUserOk);
-    addUserBoxPopup.appendChild(addUserX);    
+    addUserBoxPopup.classList.toggle('show_grid')
     document.getElementById("addUserName").focus();
     
 }
@@ -150,7 +129,9 @@ function closeAddUser() {
 }
 
 function confirmUser() {
-    addUserBoxPopup.style.display = 'none';
+    try {
+        addUserBoxPopup.classList.remove('show_grid')
+    } catch {}
     userMeta.users.push(addUserName.value);
     saveUser();
     renderUser();
@@ -257,4 +238,6 @@ function renderUser() {
 function valuesCUjs() {
     newUser.value = lang("create_user");
     addUserName0.innerHTML = lang("user_name");
+    addUserOk.value = lang("confirm");
+    addUserX.value = lang("cancel");
 }

@@ -56,6 +56,23 @@
     }
 }
 
+@media (max-width : 360px){
+    .inputLine {
+        display: grid;
+        grid-template-columns: 1fr 160px;
+        gap: 15px;
+    }
+    #todo{
+        max-width: 150px;
+        min-width: 20px; 
+        width: 100%;
+    }
+}
+
+#todo {
+    font-size: 16px;
+}
+
 .btn {
     margin : 3px;
 }
@@ -67,6 +84,11 @@
 .todobtn {
     float: right;
     margin : 3px;
+}
+.defbtn{
+    margin: 2px;
+    width: 27.2px;
+    height: 23.9px;
 }
 
 .popups{
@@ -121,10 +143,9 @@
     position : fixed;
     left: 50%;
     top: 50%;
-    width: 300px; /*가로길이 설정은 여기서*/
-    margin-left: -170px; /*width의 반만큼 음수로*/
-    height: 140px; /*세로길이 설정은 여기서*/
-    margin-top: -260px; /*height의 반만큼 음수로*/
+    width: 260px; 
+    height: 100px; 
+    transform: translate(-50%, -190%);
     z-index: 30;
     box-shadow: 0 4px 10px rgba(71, 60, 77, 0.3);
     border-radius: 12px;
@@ -209,4 +230,14 @@
     grid-template-rows: 25px 1fr;
     padding: 0px;
     padding-top: 10px;
+}
+
+#addUserName0 {
+    font-size: 15px;
+    display: inline;
+}
+
+#addUserName {
+    width: 140px;
+    height: 15px;
 }

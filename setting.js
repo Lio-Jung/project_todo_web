@@ -42,8 +42,6 @@ cudiv.className = "setdiv";
 cudiv.addEventListener('click', () => {
     let target = changeUserPopup;
     closeAll_openOne(target);
-    //worklog.appendChild(changeUserPopup);
-    //changeUserPopup.classList.toggle('show_grid');
 });
 document.body.appendChild(changeUserPopup);
 setdivmain.appendChild(cudiv);
@@ -60,31 +58,6 @@ langdiv.addEventListener('click', () => {
 });
 document.body.appendChild(langpopup); //from language.js... cuz setting.js has <defer>
 setdivmain.appendChild(langdiv);
-
-/*
-///////////////////////////////////////////////////////////////
-//test div
-const testdiv = document.createElement('div');
-testdiv.id = 'testdiv';
-testdiv.className = "setdiv";
-testdiv.textContent = 'test';
-setdivmain.appendChild(testdiv);
-let istest = true;
-testdiv.addEventListener('click', () => {
-    let target = test2;
-    closeAll_openOne(target);   
-});
-const test2 = document.createElement('div');
-test2.className = 'div_popups'
-test2.style.height = "200px";
-test2.style.width = "200px";
-test2.style.background = 'black';
-document.body.appendChild(test2);
-const btn1 = document.createElement('input');
-btn1.type = 'button';
-test2.appendChild(btn1);
-///////////////////////////////////////////////////////////////
-*/
 
 //mouse enter/leave setting divs
 let settar = document.querySelectorAll(".setdiv");
@@ -163,7 +136,6 @@ function closeAll_openOne(target) {
     });
     target.classList.toggle('show_grid'); 
 }
-
 
 async function loadWorkLog() {
   try {
